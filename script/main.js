@@ -25,11 +25,12 @@ const handler = e => {
 };
 
 const init = () => {
-    audioPlayerInit();
-    videoPlayerInit();
-    radioPlayerInit();
 
     player.addEventListener('click', handler);
+
+    videoPlayerInit();
+    audioPlayerInit();
+    radioPlayerInit();
 };
 
 init();
