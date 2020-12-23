@@ -6,8 +6,14 @@ export const radioPlayerInit = () => {
         radioNavigation = document.querySelector('.radio-navigation'),
         radioItem = document.querySelectorAll('.radio-item'),
         radioStop = document.querySelector('.radio-stop'),
+        radioFooter = document.querySelector('.radio-footer'),
+        audioVolume = document.querySelector('.audio-volume'),
         audio = new Audio(); // создаем объект Audio, а не получаем со страницы
-    audio.type = 'audio/aac';
+    
+    let click = 0,
+        volumeLevel;
+    
+        audio.type = 'audio/aac';
     radioStop.disabled = true;
 
     const playIconTgl = (player, btn, classWait = 'fa-play', classAct = 'fa-stop') => {
@@ -29,6 +35,8 @@ export const radioPlayerInit = () => {
             elemNode.forEach(elem => elem.classList.remove(switchClass));
             activeItem.classList.add(switchClass);
         },
+
+        changeVolume = () => audio.volume = audioVolume.value / 100,
 
         playerHandler = e => {
             const stationItem = e.target.closest('.radio-item'),
@@ -57,5 +65,27 @@ export const radioPlayerInit = () => {
 
     radioNavigation.addEventListener('change', playerHandler);
     radioStop.addEventListener('click', playBtnHandler);
+
+    radioFooter.addEventListener('click', e => {
+        if (e.target.matches('.fa-volume-up')) {
+            if (click < 1) {
+                volumeLevel = audio.volume;
+                audioVolume.value = 100;
+                audio.volume = audioVolume.value / 100;
+                click++;
+            } else {
+                audio.volume = volumeLevel;
+                audioVolume.value = audio.volume * 100;
+                click = 0;
+            }
+
+            console.log(volumeLevel);
+            console.log(audioVolume.value);
+            console.log(audio.volume);
+        } // end if volume-up
+        changeVolume();
+    });
+
+    audioVolume.addEventListener('input', changeVolume);
 
 };  // end export radioPlayerInit
