@@ -7,14 +7,16 @@ export const radioPlayerInit = () => {
         radioItem = document.querySelectorAll('.radio-item'),
         radioStop = document.querySelector('.radio-stop'),
         radioFooter = document.querySelector('.radio-footer'),
+        volumeCtrl = document.querySelectorAll('.volume-control'),
         audioVolume = document.querySelector('.audio-volume'),
         audio = new Audio(); // создаем объект Audio, а не получаем со страницы
-    
+
     let click = 0,
         volumeLevel;
-    
-        audio.type = 'audio/aac';
+
+    audio.type = 'audio/aac';
     radioStop.disabled = true;
+    volumeCtrl.forEach(elem => elem.disabled = true);
 
     const playIconTgl = (player, btn, classWait = 'fa-play', classAct = 'fa-stop') => {
             if (player.paused) {
@@ -46,6 +48,7 @@ export const radioPlayerInit = () => {
             radioCoverImg.src = stationCover;
             audio.src = e.target.dataset.radioStantion;
             radioStop.disabled = false;
+            volumeCtrl.forEach(elem => elem.disabled = false);
 
             audio.play();
             itemSwitch(stationItem, radioItem, 'select');
@@ -53,39 +56,60 @@ export const radioPlayerInit = () => {
             iconTgl(radio);
         }, // end playerHandler
 
-        playBtnHandler = () => {
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-            playIconTgl(audio, radioStop);
-            iconTgl(radio);
+        controlBtnHandler = e => {
+            if (e.target.matches('.radio-stop')) {
+                if (audio.paused) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                }
+                playIconTgl(audio, radioStop);
+                iconTgl(radio);
+            }  // end if target radio-stop
+
+            if (e.target.matches('.fa-volume-up')) {
+                if (click < 1) {
+                    volumeLevel = audio.volume;
+                    audioVolume.value = 100;
+                    audio.volume = audioVolume.value / 100;
+                    click++;
+                } else {
+                    audio.volume = volumeLevel;
+                    audioVolume.value = audio.volume * 100;
+                    click = 0;
+                }
+            } // end if target volume-up
+
+            if (e.target.matches('.fa-volume-down')) {
+                if (click < 1) {
+                    volumeLevel = audio.volume;
+                    audioVolume.value = 0;
+                    audio.volume = 0;
+                    click++;
+                } else {
+                    audio.volume = volumeLevel;
+                    audioVolume.value = audio.volume * 100;
+                    click = 0;
+                }
+            } // end if target volume-down
+
+            if (e.target.matches('.fa-volume-off')) {
+                if (click < 1) {
+                    volumeLevel = audio.volume;
+                    audioVolume.value = 0;
+                    audio.volume = 0;
+                    click++;
+                } else {
+                    audio.volume = volumeLevel;
+                    audioVolume.value = audio.volume * 100;
+                    click = 0;
+                }
+            } // end if target volume-off
         }; // end playBtnHandler
 
     radioNavigation.addEventListener('change', playerHandler);
-    radioStop.addEventListener('click', playBtnHandler);
-
-    radioFooter.addEventListener('click', e => {
-        if (e.target.matches('.fa-volume-up')) {
-            if (click < 1) {
-                volumeLevel = audio.volume;
-                audioVolume.value = 100;
-                audio.volume = audioVolume.value / 100;
-                click++;
-            } else {
-                audio.volume = volumeLevel;
-                audioVolume.value = audio.volume * 100;
-                click = 0;
-            }
-
-            console.log(volumeLevel);
-            console.log(audioVolume.value);
-            console.log(audio.volume);
-        } // end if volume-up
-        changeVolume();
-    });
-
+    radioFooter.addEventListener('click', controlBtnHandler);
     audioVolume.addEventListener('input', changeVolume);
+    changeVolume();
 
 };  // end export radioPlayerInit

@@ -3,6 +3,7 @@ html{-webkit-box-sizing:border-box;box-sizing:border-box}*,*::before,*::after{-w
 .video-icon {
     margin-left: 5px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 .video-volume {
@@ -20,6 +21,11 @@ html{-webkit-box-sizing:border-box;box-sizing:border-box}*,*::before,*::after{-w
 
 .radio-stop {
     margin-right: 15px;
+}
+
+.volume-control:disabled {
+    color: #aaa;
+    opacity: .3;
 }
 
 .audio-volume {

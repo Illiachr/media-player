@@ -7,7 +7,7 @@ export const videoPlayerInit = () => {
         videoVolume = document.querySelector('.video-volume'),
         videoFullScreen = document.querySelector('.video-fullscreen'),
         videoTimeTotal = document.querySelector('.video-time__total');
-    
+
     let click = 0,
         volumeLevel = 0;
 
