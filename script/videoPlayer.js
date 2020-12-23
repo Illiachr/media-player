@@ -58,4 +58,4 @@ export const videoPlayerInit = () => {
     playerBlock.addEventListener('click', handler);
     videoPlayer.addEventListener('timeupdate', timeHandler);
     videoProgress.addEventListener('change', progressHandler);
-}; // export videoPlayerInit
+}; // end export videoPlayerInit
