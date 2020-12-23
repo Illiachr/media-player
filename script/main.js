@@ -13,11 +13,21 @@ const deactivateAll = () => {
     playerBlock.forEach(item => item.classList.remove('active'));
 };
 
+const deactivatePlayers = () => {
+    temp.style.display = 'none';
+    playerBtn.forEach(item => item.classList.remove('active'));
+    playerBlock.forEach(item => item.classList.remove('active'));
+
+    radioPlayerInit.stop();
+    videoPlayerInit.stop();
+};
+
 const handler = e => {
     playerBtn.forEach((item, i) => {
 
         if (e.target.className === item.className) {
-            deactivateAll();
+            //deactivateAll();
+            deactivatePlayers();
             item.classList.add('active');
             playerBlock[i].classList.add('active');
         }
