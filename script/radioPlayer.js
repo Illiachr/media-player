@@ -94,16 +94,9 @@ export const radioPlayerInit = () => {
             } // end if target volume-down
 
             if (e.target.matches('.fa-volume-off')) {
-                if (click < 1) {
-                    volumeLevel = audio.volume;
-                    audioVolume.value = 0;
-                    audio.volume = 0;
-                    click++;
-                } else {
-                    audio.volume = volumeLevel;
-                    audioVolume.value = audio.volume * 100;
-                    click = 0;
-                }
+                if (!audio.muted) {
+                    audio.muted = true;
+                } else { audio.muted = false; }
             } // end if target volume-off
         }; // end playBtnHandler
 
@@ -111,5 +104,10 @@ export const radioPlayerInit = () => {
     radioFooter.addEventListener('click', controlBtnHandler);
     audioVolume.addEventListener('input', changeVolume);
     changeVolume();
+
+    radioPlayerInit.stop = () => {
+        audio.pause();
+        playIconTgl(audio, radioStop);
+    };
 
 };  // end export radioPlayerInit

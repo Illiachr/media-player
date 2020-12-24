@@ -109,5 +109,10 @@ export const videoPlayerInit = () => {
     videoVolume.addEventListener('input', changeVolume);
     changeVolume();
 
+    videoPlayerInit.stop = () => {
+        videoPlayer.pause();
+        playIconTgl();
+    };
+
 
 }; // end export videoPlayerInit
