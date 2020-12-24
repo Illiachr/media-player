@@ -1,3 +1,5 @@
+import { addZero } from './supportScript.js';
+
 export const videoPlayerInit = () => {
     const playerBlock = document.querySelector('.player-block'),
         videoPlayer = document.querySelector('.video-player'),
@@ -11,9 +13,7 @@ export const videoPlayerInit = () => {
     let click = 0,
         volumeLevel = 0;
 
-    const addZero = num => num = num < 10 ? `0${num}` : num,
-
-        playIconTgl = () => {
+    const playIconTgl = () => {
             if (videoPlayer.paused) {
                 videoButtonPlay.classList.add('fa-play');
                 videoButtonPlay.classList.remove('fa-pause');

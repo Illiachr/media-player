@@ -7,12 +7,6 @@ const player = document.querySelector('.player'),
     playerBlock = document.querySelectorAll('.player-block'),
     temp = document.querySelector('.temp');
 
-const deactivateAll = () => {
-    temp.style.display = 'none';
-    playerBtn.forEach(item => item.classList.remove('active'));
-    playerBlock.forEach(item => item.classList.remove('active'));
-};
-
 const deactivatePlayers = () => {
     temp.style.display = 'none';
     playerBtn.forEach(item => item.classList.remove('active'));
@@ -20,13 +14,13 @@ const deactivatePlayers = () => {
 
     radioPlayerInit.stop();
     videoPlayerInit.stop();
+    audioPlayerInit.stop();
 };
 
 const handler = e => {
     playerBtn.forEach((item, i) => {
 
         if (e.target.className === item.className) {
-            //deactivateAll();
             deactivatePlayers();
             item.classList.add('active');
             playerBlock[i].classList.add('active');
